@@ -1,0 +1,4 @@
+#Mon Aug 14 14:23:03 BRT 2023
+base.0=/home/camily/ConcesCar/concescar/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
