@@ -1,13 +1,39 @@
 import 'package:flutter/material.dart';
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    //ChangeNotifierProvider(
-    //create: (context) => EstadoListaDePessoas(),
-    /*child:*/ const MyApp(),
+    ChangeNotifierProvider(
+      create: (context) => EstadoCadastroDeAdm(),
+      child: const MyApp(),
+    ),
   );
-  //);
+}
+
+class Adm {
+  final String? email;
+  final String? senha;
+
+  Adm({
+    this.email,
+    this.senha,
+  });
+}
+
+class EstadoCadastroDeAdm with ChangeNotifier {
+  final _cadastroDeAdm = <Adm>[];
+
+  List<Adm> get adms => List.unmodifiable(_cadastroDeAdm);
+
+  void incluir(Adm adm) {
+    _cadastroDeAdm.add(adm);
+    notifyListeners();
+  }
+
+  void excluir(Adm adm) {
+    _cadastroDeAdm.remove(adm);
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -192,14 +218,6 @@ class _LoginAdmState extends State<_LoginAdm> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //final adm = Adm(
-                  //email:
-                  //email;
-                  //senha:
-                  //senha;
-                  //);
-                  //Provider.of<EstadoListaDePessoas>(context, listen: false)
-                  //.incluir(pessoa);
                   Navigator.pop(context);
                 },
                 child: const Text("Entrar"),
@@ -258,14 +276,6 @@ class _LoginConcessionariaState extends State<_LoginConcessionaria> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //final concessionaria = Concessionaria(
-                  //nome:
-                  //nome;
-                  //senha:
-                  //senha;
-                  //);
-                  //Provider.of<EstadoListaDePessoas>(context, listen: false)
-                  //  .incluir(pessoa);
                   Navigator.pop(context);
                 },
                 child: const Text("Entrar"),
@@ -346,14 +356,12 @@ class _CadastrarAdmState extends State<_CadastrarAdm> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //final adm = Adm(
-                  //email:
-                  //email;
-                  //senha:
-                  //senha;
-                  //);
-                  //Provider.of<EstadoListaDePessoas>(context, listen: false)
-                  //.incluir(pessoa);
+                  final adm = Adm(
+                    email: email,
+                    senha: senha,
+                  );
+                  Provider.of<EstadoCadastroDeAdm>(context, listen: false)
+                      .incluir(adm);
                   Navigator.pop(context);
                 },
                 child: const Text("Criar"),

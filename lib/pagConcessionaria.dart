@@ -1,13 +1,81 @@
 import 'package:flutter/material.dart';
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    //ChangeNotifierProvider(
-    //create: (context) => EstadoListaDePessoas(),
-    /*child:*/ const MyApp(),
-  );
-  //);
+  runApp(ChangeNotifierProvider(
+    create: (context) => EstadoCadastroVeiculos(),
+    child: const MyApp(),
+  ));
+}
+
+class EstadoCadastroVeiculos extends ChangeNotifier {
+  List<Carro> carros = [];
+
+  void incluir(Carro carro) {
+    carros.add(carro);
+    notifyListeners();
+  }
+
+  void excluir(Carro carro) {
+    carros.remove(carro);
+    notifyListeners();
+  }
+}
+
+class EstadoRealizarVenda extends ChangeNotifier {
+  List<Venda> vendas = [];
+
+  void incluir(Venda venda) {
+    vendas.add(venda);
+    notifyListeners();
+  }
+
+  void excluir(Venda venda) {
+    vendas.remove(venda);
+    notifyListeners();
+  }
+}
+
+class Venda {
+  String? doc_comprador;
+  String? nome_comprador;
+  String? data_venda;
+  String? preco_vendido;
+  String? valor_conces;
+  String? valor_rede;
+  String? valor_seg;
+
+  Venda({
+    this.doc_comprador,
+    this.nome_comprador,
+    this.data_venda,
+    this.preco_vendido,
+    this.valor_conces,
+    this.valor_rede,
+    this.valor_seg,
+  });
+}
+
+class Carro {
+  String? modelo;
+  String? marca;
+  String? ano_fab;
+  String? placa;
+  String? ano_veiculo;
+  String? preco_pago;
+  String? data_compra;
+  String? imagem;
+
+  Carro({
+    this.modelo,
+    this.marca,
+    this.ano_fab,
+    this.placa,
+    this.ano_veiculo,
+    this.preco_pago,
+    this.data_compra,
+    this.imagem,
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -239,26 +307,18 @@ class _CadastrarVeiculoState extends State<_CadastrarVeiculo> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //final carro = Carro(
-                  /*modelo:
-                  modelo;
-                  marca:
-                  marca;
-                  ano_fab:
-                  ano_fab;
-                  placa:
-                  placa;
-                  ano_veiculo:
-                  ano_veiculo;
-                  preco_pago:
-                  preco_pago;
-                  data_compra:
-                  data_compra;
-                  imagem:
-                  imagem;*/
-                  //);
-                  //Provider.of<EstadoListaDePessoas>(context, listen: false)
-                  //.incluir(pessoa);
+                  final carro = Carro(
+                    modelo: modelo,
+                    marca: marca,
+                    ano_fab: ano_fab,
+                    placa: placa,
+                    ano_veiculo: ano_veiculo,
+                    preco_pago: preco_pago,
+                    data_compra: data_compra,
+                    imagem: imagem,
+                  );
+                  Provider.of<EstadoCadastroVeiculos>(context, listen: false)
+                      .incluir(carro);
                   Navigator.pop(context);
                 },
                 child: const Text("Cadastrar"),
@@ -373,24 +433,17 @@ class _RealizarVendaState extends State<_RealizarVenda> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //final adm = Adm(
-                  /*doc_comprador:
-                  doc_comprador;
-                  nome_comprador:
-                  nome_comprador;
-                  data_venda:
-                  data_venda;
-                  preco_vendido:
-                  preco_vendido;
-                  valor_conces:
-                  valor_conces;
-                  valor_rede:
-                  valor_rede;
-                  valor_seg:
-                  valor_seg;*/
-                  //);
-                  //Provider.of<EstadoListaDePessoas>(context, listen: false)
-                  //.incluir(pessoa);
+                  final venda = Venda(
+                    doc_comprador: doc_comprador,
+                    nome_comprador: nome_comprador,
+                    data_venda: data_venda,
+                    preco_vendido: preco_vendido,
+                    valor_conces: valor_conces,
+                    valor_rede: valor_rede,
+                    valor_seg: valor_seg,
+                  );
+                  Provider.of<EstadoRealizarVenda>(context, listen: false)
+                      .incluir(venda);
                   Navigator.pop(context);
                 },
                 child: const Text("Vender"),

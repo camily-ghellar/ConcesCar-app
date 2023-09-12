@@ -1,13 +1,44 @@
 import 'package:flutter/material.dart';
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    //ChangeNotifierProvider(
-    //create: (context) => EstadoListaDePessoas(),
-    /*child:*/ const MyApp(),
-  );
-  //);
+  runApp(ChangeNotifierProvider(
+    create: (context) => EstadoCadastroDeConcessionaria(),
+    child: const MyApp(),
+  ));
+}
+
+class Concessionaria {
+  String? nome;
+  String? email;
+  String? telefone;
+  String? endereco;
+  String? senha;
+
+  Concessionaria({
+    this.nome,
+    this.email,
+    this.telefone,
+    this.endereco,
+    this.senha,
+  });
+}
+
+class EstadoCadastroDeConcessionaria with ChangeNotifier {
+  final _cadastroDeConcessionaria = <Concessionaria>[];
+
+  List<Concessionaria> get concessionarias =>
+      List.unmodifiable(_cadastroDeConcessionaria);
+
+  void incluir(Concessionaria concessionaria) {
+    _cadastroDeConcessionaria.add(concessionaria);
+    notifyListeners();
+  }
+
+  void excluir(Concessionaria concessionaria) {
+    _cadastroDeConcessionaria.remove(concessionaria);
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -183,21 +214,16 @@ class _CadastrarConcessionariaState extends State<_CadastrarConcessionaria> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //final adm = Adm(
-                  /*nome:
-                  nome;
-                  email:
-                  email;
-                  telefone:
-                  telefone;
-                  endereco:
-                  endereco;
-                  senha:
-                  senha;*/
-
-                  //);
-                  //Provider.of<EstadoListaDePessoas>(context, listen: false)
-                  //.incluir(pessoa);
+                  final concessionaria = Concessionaria(
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    endereco: endereco,
+                    senha: senha,
+                  );
+                  Provider.of<EstadoCadastroDeConcessionaria>(context,
+                          listen: false)
+                      .incluir(concessionaria);
                   Navigator.pop(context);
                 },
                 child: const Text("Cadastrar"),
